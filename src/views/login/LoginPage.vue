@@ -12,11 +12,11 @@
       </el-form-item>
 
       <el-form-item prop="password">
-        <el-icon :size="20" class="svg-container">
+        <!-- <el-icon :size="20" class="svg-container">
           <edit />
-        </el-icon>
-        <!-- <svg-icon icon="password" class="svg-container"></svg-icon> -->
-        <el-input v-model="form.password"></el-input>
+        </el-icon> -->
+        <svg-icon class="svg-container" icon="password"></svg-icon>
+        <el-input v-model="form.password" type="password"></el-input>
       </el-form-item>
       <el-button type="primary" class="login-button" @click="handleLogin">登录</el-button>
     </el-form>

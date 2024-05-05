@@ -1,24 +1,24 @@
-const { defineConfig } = require('@vue/cli-service');
 const AutoImport = require('unplugin-auto-import/webpack').default; // 注意使用 .default
 const Components = require('unplugin-vue-components/webpack').default; // 注意使用 .default
 const { ElementPlusResolver } = require('unplugin-vue-components/resolvers');
+
 const path = require('path')
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
 const webpack = require('webpack')
-
-module.exports = defineConfig({
-  transpileDependencies: true,
-  configureWebpack: {
-    plugins: [
+module.exports = {
+  configureWebpack: (config) => {
+    config.plugins.push(
       AutoImport({
-        resolvers: [ElementPlusResolver()],
-      }),
+        resolvers: [ElementPlusResolver()]
+      })
+    )
+    config.plugins.push(
       Components({
-        resolvers: [ElementPlusResolver()],
-      }),
-    ]
+        resolvers: [ElementPlusResolver()]
+      })
+    )
   },
   chainWebpack(config) {
     // 设置 svg-sprite-loader
@@ -53,9 +53,7 @@ module.exports = defineConfig({
       .end()
     config
       .plugin('ignore')
-      .use(
-        new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn$/)
-      )
+      .use(new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn$/))
     config.module
       .rule('icons')
       .test(/\.svg$/)
@@ -72,7 +70,7 @@ module.exports = defineConfig({
     https: false,
     proxy: {
       '/api': {
-        target: 'http://192.168.31.145:8000/login/',
+        target: 'https://lianghj.top:8888/api/private/v1/',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
@@ -80,4 +78,4 @@ module.exports = defineConfig({
       }
     }
   },
-});
+}
